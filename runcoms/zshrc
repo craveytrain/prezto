@@ -1,3 +1,5 @@
+#!/usr/bin/env zsh
+
 #
 # Executes commands at the start of an interactive session.
 #
@@ -6,8 +8,85 @@
 #
 
 # Source Prezto.
-if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
-  source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
+if [[ -s "$DOTFILES/zprezto/init.zsh" ]]; then
+  source "$DOTFILES/zprezto/init.zsh"
 fi
 
 # Customize to your needs...
+# load the default before the modules load
+autoload -Uz compinit && compinit
+
+source_if_present() {
+  if [ -f "$1" ]; then
+    . "$1"
+  fi
+}
+
+path=(
+  $HOME/bin
+  $DOTFILES/bin
+  /usr/local/opt/coreutils
+  $path
+)
+
+source_if_present "$DOTFILES/zsh/aliases.zsh"
+source_if_present "$DOTFILES/system/load.sh"
+
+
+# Spaceship Prompt config
+SPACESHIP_PROMPT_ORDER=(
+  user          # Username section
+  dir           # Current directory section
+  host          # Hostname section
+  git_branch    # Git branch
+  git_status    # Git status
+  # hg            # Mercurial section (hg_branch  + hg_status)
+  package       # Package version
+  docker        # Docker section
+  aws           # Amazon Web Services section
+  exec_time     # Execution time
+  line_sep      # Line break
+  vi_mode       # Vi-mode indicator
+  jobs          # Background jobs indicator
+  exit_code     # Exit code section
+  char          # Prompt character
+)
+
+SPACESHIP_RPROMPT_ORDER=(
+  # time          # Time stamps section
+  node          # Node.js section
+  # venv          # virtualenv section
+  # conda         # conda virtualenv section
+  # pyenv         # Pyenv section
+  # dotnet        # .NET section
+  # ember         # Ember.js section
+  # kubecontext   # Kubectl context section
+  # terraform     # Terraform workspace section
+  # ruby          # Ruby section
+  # elixir        # Elixir section
+  # xcode         # Xcode section
+  # swift         # Swift section
+  # golang        # Go section
+  # php           # PHP section
+  # rust          # Rust section
+  # haskell       # Haskell Stack section
+  # julia         # Julia section
+  # battery       # Battery level and status
+)
+
+
+SPACESHIP_GIT_STATUS_PREFIX="["
+SPACESHIP_GIT_STATUS_SUFFIX="] "
+SPACESHIP_GIT_STATUS_COLOR="red"
+SPACESHIP_GIT_STATUS_UNTRACKED="?"
+SPACESHIP_GIT_STATUS_ADDED="+"
+SPACESHIP_GIT_STATUS_MODIFIED="!"
+SPACESHIP_GIT_STATUS_RENAMED="»"
+SPACESHIP_GIT_STATUS_DELETED="✘"
+SPACESHIP_GIT_STATUS_STASHED="$"
+SPACESHIP_GIT_STATUS_UNMERGED="="
+SPACESHIP_GIT_STATUS_AHEAD="⇡"
+SPACESHIP_GIT_STATUS_BEHIND="⇣"
+SPACESHIP_GIT_STATUS_DIVERGED="⇕"
+SPACESHIP_GIT_BRANCH_COLOR="yellow"
+SPACESHIP_PACKAGE_COLOR="magenta"
