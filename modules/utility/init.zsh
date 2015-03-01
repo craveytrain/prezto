@@ -77,7 +77,7 @@ if is-callable 'dircolors'; then
   # GNU Core Utilities
 
   if zstyle -T ':prezto:module:utility:ls' dirs-first; then
-    alias ls="${aliases[ls]:-ls} --group-directories-first"
+    alias ls="${aliases[ls]:-ls} --group-directories-first -F"
   fi
 
   if zstyle -t ':prezto:module:utility:ls' color; then
@@ -90,7 +90,7 @@ if is-callable 'dircolors'; then
       fi
     fi
 
-    alias ls="${aliases[ls]:-ls} --color=auto"
+    alias ls="${aliases[ls]:-ls} --color=auto -F"
   else
     alias ls="${aliases[ls]:-ls} -F"
   fi
@@ -107,7 +107,7 @@ else
       export LS_COLORS='di=34:ln=35:so=32:pi=33:ex=31:bd=36;01:cd=33;01:su=31;40;07:sg=36;40;07:tw=32;40;07:ow=33;40;07:'
     fi
 
-    alias ls="${aliases[ls]:-ls} -G"
+    alias ls="${aliases[ls]:-ls} -GF"
   else
     alias ls="${aliases[ls]:-ls} -F"
   fi
